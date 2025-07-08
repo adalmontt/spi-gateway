@@ -7,7 +7,6 @@ app.use(express.json());
 let config = {
   timeoutProbability: 0.2,        // Simula connection timeout (no responde)
   readDelayProbability: 0.3,      // Simula read timeout (tarda en responder)
-  realCallProbability: 0.5,       // Llama a la API real si se configuró
   readDelayMs: 10000,             // Tiempo de delay (simulando read timeout)
 };
 
@@ -23,7 +22,7 @@ app.all('/test', async (req, res) => {
   if (rand < config.timeoutProbability + config.readDelayProbability) {
     console.log('[SIMULACIÓN] Read Timeout');
     return setTimeout(() => {
-      res.status(504).send('Read timeout simulado');
+      res.status(504).send('Read timed out');
     }, config.readDelayMs);
   }
 
