@@ -1,15 +1,27 @@
 const express = require('express');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
 
 const app = express();
 app.use(express.json());
 
+const configPath = path.join(__dirname, 'config.json');
+
 let config = {
-  timeoutProbability: 0.2,        // Simula connection timeout (no responde)
-  readDelayProbability: 0.3,      // Simula read timeout (tarda en responder)
-  readDelayMs: 10000,             // Tiempo de delay (simulando read timeout)
+  timeoutProbability: 0,
+  readDelayProbability: 0,
+  readDelayMs: 1000
 };
 
+try {
+  const configFile = fs.readFileSync(configPath, 'utf-8');
+  config = JSON.parse(configFile);
+  console.log('Configuración cargada:', config);
+} catch (err) {
+  console.warn('No se pudo cargar config.json. Usando configuración por defecto:', config);
+}
 
 app.all('/test', async (req, res) => {
   const rand = Math.random();

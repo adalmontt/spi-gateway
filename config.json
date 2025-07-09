@@ -1,0 +1,5 @@
+{
+  "timeoutProbability": 0.0,
+  "readDelayProbability": 1.0,
+  "readDelayMs": 10000
+}
